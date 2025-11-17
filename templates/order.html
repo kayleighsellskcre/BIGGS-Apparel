@@ -1,719 +1,406 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Start a Mock Order • KB Apparel Studio</title>
+<head>
+  <meta charset="UTF-8">
+  <title>Create Your Order • BIGGS Apparel Studio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #F8F3ED;
+      --primary: #F4A261;
+      --primary-dark: #E76F51;
+      --ink: #264653;
+      --card-bg: #FFFFFF;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+    header {
+      padding: 1rem 1.25rem 0.25rem;
+    }
+    .title {
+      font-family: "Poppins", sans-serif;
+      font-size: 1.35rem;
+    }
+    main {
+      padding: 0.25rem 1.25rem 5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .section {
+      margin-bottom: 1rem;
+      background: var(--card-bg);
+      border-radius: 1rem;
+      padding: 0.9rem 1rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    .section h2 {
+      margin: 0 0 0.25rem;
+      font-family: "Poppins", sans-serif;
+      font-size: 1rem;
+    }
+    .section p {
+      margin: 0 0 0.75rem;
+      font-size: 0.85rem;
+      opacity: 0.85;
+    }
+    label {
+      font-size: 0.85rem;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    select, input[type="text"], input[type="number"], input[type="file"], input[type="email"], input[type="tel"] {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 0.6rem;
+      border: 1px solid rgba(0,0,0,0.15);
+      font-size: 0.9rem;
+      margin-bottom: 0.6rem;
+    }
+    .inline-row {
+      display: flex;
+      gap: 0.6rem;
+    }
+    .inline-row > div { flex: 1; }
 
-    <style>
-      :root {
-        --bg: #f5f2ec;
-        --text-main: #2b2724;
-        --text-muted: #7a6f66;
-        --accent-1: #f7c9a4;
-        --accent-2: #f6b8b8;
-        --accent-3: #b7d3c6;
-        --accent-4: #f9e58b;
-        --accent-5: #d7c5f2;
-        --card-bg: #ffffff;
-        --border-soft: #e0d7cc;
-      }
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .pill {
+      padding: 0.4rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.2);
+      font-size: 0.8rem;
+      cursor: pointer;
+      background: #F9FAFB;
+    }
+    .pill input { display: none; }
+    .pill.active {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+    }
 
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
+    .btn-main {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 999px;
+      border: none;
+      background: var(--ink);
+      color: #fff;
+      font-weight: 600;
+      margin-top: 0.25rem;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+    }
 
-      body {
-        min-height: 100vh;
-        padding: 2.5rem 1.75rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: radial-gradient(circle at top left, #fffdf8, #f5f2ec);
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
-        color: var(--text-main);
-      }
+    .order-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .order-item-card {
+      padding: 0.6rem 0.7rem;
+      border-radius: 0.8rem;
+      background: #F3F4F6;
+      font-size: 0.8rem;
+    }
 
-      .frame {
-        width: 100%;
-        max-width: 1100px;
-        background: var(--card-bg);
-        border-radius: 2rem;
-        border: 1px solid var(--border-soft);
-        box-shadow: 0 22px 65px rgba(181, 164, 140, 0.35);
-        padding: 2.5rem 2.7rem 2.3rem;
+    .preview-card {
+      border-radius: 1rem;
+      background: linear-gradient(135deg, #FFE5D4, #F0FAFF);
+      padding: 0.9rem 1rem;
+      display: flex;
+      flex-direction: row;
+      gap: 0.7rem;
+      align-items: center;
+    }
+
+    .preview-shirt {
+      width: 80px;
+      height: 100px;
+      border-radius: 0.6rem;
+      background: #FFFFFF;
+      border: 2px dashed rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      text-align: center;
+      padding: 0.25rem;
+    }
+
+    .preview-details {
+      font-size: 0.85rem;
+    }
+
+    .sticky-cart {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--ink);
+      color: #fff;
+      padding: 0.6rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+    .sticky-cart button {
+      background: #fff;
+      color: var(--ink);
+      border-radius: 999px;
+      border: none;
+      padding: 0.45rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    @media (min-width: 900px) {
+      .two-col {
         display: grid;
-        grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
-        gap: 2.4rem;
-      }
-
-      @media (max-width: 900px) {
-        body {
-          padding: 1.5rem;
-        }
-        .frame {
-          grid-template-columns: 1fr;
-          padding: 2rem 1.6rem 1.8rem;
-          border-radius: 1.5rem;
-        }
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .back-link {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-        margin-bottom: 1.6rem;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-      }
-
-      .back-link span {
-        font-size: 1rem;
-      }
-
-      h1 {
-        font-size: clamp(1.9rem, 2.5vw + 1rem, 2.4rem);
-        margin-bottom: 0.4rem;
-        letter-spacing: -0.02em;
-      }
-
-      .subtitle {
-        font-size: 0.95rem;
-        color: var(--text-muted);
-        margin-bottom: 1.5rem;
-        max-width: 25rem;
-      }
-
-      .step-label {
-        font-size: 0.8rem;
-        letter-spacing: 0.13em;
-        text-transform: uppercase;
-        color: #7d6a58;
-        margin-bottom: 0.4rem;
-      }
-
-      form {
-        display: grid;
-        gap: 1.5rem;
-      }
-
-      .field-group {
-        display: grid;
-        gap: 0.5rem;
-      }
-
-      .field-row {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: 3fr 2fr;
         gap: 1rem;
+        align-items: flex-start;
       }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="title">Build Your Order</div>
+    <div style="font-size:0.85rem; opacity:0.8;">
+      Add as many different items as you need — designs, styles, colors, and placements can all be mixed.
+    </div>
+  </header>
 
-      label {
-        font-size: 0.85rem;
-        color: #4b4037;
-      }
+  <main>
+    <form id="order-form">
+      <div class="two-col">
+        <div>
+          <!-- Section 1: Group / Design -->
+          <section class="section">
+            <h2>1. Group & Design</h2>
+            <p>Select an existing organization or choose “New Custom Organization”.</p>
 
-      input[type="text"],
-      input[type="email"],
-      input[type="number"],
-      select,
-      textarea {
-        width: 100%;
-        padding: 0.55rem 0.75rem;
-        border-radius: 0.8rem;
-        border: 1px solid rgba(207, 191, 170, 0.9);
-        font-size: 0.9rem;
-        background: #fffcf7;
-        color: var(--text-main);
-      }
+            <label for="client">Organization</label>
+            <select id="client" name="client">
+              <option value="">New Custom Organization</option>
+              {% for client in clients %}
+              <option value="{{ client.slug }}" {% if selected_client == client.slug %}selected{% endif %}>
+                {{ client.name }}
+              </option>
+              {% endfor %}
+            </select>
 
-      textarea {
-        min-height: 100px;
-        resize: vertical;
-      }
+            <label>Choose a design</label>
+            <input type="text" id="design-name" placeholder="Design name / number (or describe it)" />
 
-      input::placeholder,
-      textarea::placeholder {
-        color: #b2a396;
-      }
+            <label>Upload artwork (optional for new groups)</label>
+            <input type="file" id="design-file" accept="image/*" />
+          </section>
 
-      .helper {
-        font-size: 0.78rem;
-        color: var(--text-muted);
-      }
+          <!-- Section 2: Item details -->
+          <section class="section">
+            <h2>2. Item Details</h2>
+            <p>Choose your Bella+Canvas style, color, size, placements and quantity.</p>
 
-      .chips-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.4rem;
-      }
+            <label for="style">Apparel style</label>
+            <select id="style" name="style">
+              {% for style in bella_styles %}
+              <option value="{{ style.code }}">{{ style.name }}</option>
+              {% endfor %}
+              <option value="other-brand">Other recommended brand</option>
+            </select>
 
-      .chip-option {
-        padding: 0.35rem 0.75rem;
-        border-radius: 999px;
-        border: 1px solid rgba(204, 187, 165, 0.9);
-        background: #fdf9f3;
-        font-size: 0.78rem;
-        color: #5f5247;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.35rem;
-        cursor: pointer;
-      }
-
-      .chip-option input {
-        margin: 0;
-      }
-
-      .sizes-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.4rem;
-      }
-
-      .size-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.25rem;
-        padding: 0.3rem 0.6rem;
-        border-radius: 999px;
-        border: 1px solid rgba(204, 187, 165, 0.9);
-        background: #fffcf7;
-        font-size: 0.78rem;
-      }
-
-      .size-pill input {
-        margin: 0;
-      }
-
-      .submit-row {
-        margin-top: 0.4rem;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.8rem;
-        align-items: center;
-      }
-
-      .btn-main {
-        padding: 0.7rem 1.4rem;
-        border-radius: 999px;
-        border: none;
-        background: linear-gradient(
-          135deg,
-          var(--accent-1),
-          var(--accent-2)
-        );
-        color: #3a2722;
-        font-weight: 600;
-        font-size: 0.95rem;
-        cursor: pointer;
-        box-shadow: 0 12px 30px rgba(244, 185, 165, 0.7);
-        transition: transform 0.12s ease, box-shadow 0.12s ease,
-          filter 0.12s ease;
-      }
-
-      .btn-main:hover {
-        transform: translateY(-1px);
-        filter: brightness(1.03);
-        box-shadow: 0 16px 34px rgba(244, 185, 165, 0.85);
-      }
-
-      .submit-note {
-        font-size: 0.78rem;
-        color: var(--text-muted);
-      }
-
-      /* DESIGN PICKER */
-      .design-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 0.8rem;
-      }
-
-      .design-card {
-        border-radius: 1rem;
-        padding: 0.9rem 0.9rem 0.8rem;
-        border: 1px solid rgba(204, 187, 165, 0.9);
-        background: #fdf9f3;
-        display: grid;
-        gap: 0.35rem;
-        cursor: pointer;
-        transition: transform 0.1s ease, box-shadow 0.1s ease,
-          border-color 0.1s ease, background 0.1s ease;
-      }
-
-      .design-card input[type="radio"] {
-        margin-right: 0.35rem;
-      }
-
-      .design-top-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 0.35rem;
-      }
-
-      .design-tag {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        color: #7d6a58;
-      }
-
-      .design-chip {
-        font-size: 0.7rem;
-        padding: 0.15rem 0.5rem;
-        border-radius: 999px;
-        background: #ffffff;
-        border: 1px solid rgba(204, 187, 165, 0.8);
-        color: #7a5e49;
-      }
-
-      .design-name {
-        font-size: 0.9rem;
-        font-weight: 600;
-      }
-
-      .design-desc {
-        font-size: 0.8rem;
-        color: var(--text-muted);
-      }
-
-      .design-card:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 10px 22px rgba(193, 171, 143, 0.4);
-        background: #fffaf4;
-      }
-
-      .design-card.selected {
-        border-color: #e2b48b;
-        box-shadow: 0 12px 26px rgba(208, 163, 118, 0.55);
-        background: #fff5ea;
-      }
-
-      .design-section.disabled {
-        opacity: 0.4;
-        pointer-events: none;
-      }
-
-      .design-section.disabled .helper {
-        font-style: italic;
-      }
-
-      .design-card.hidden {
-        display: none;
-      }
-
-      /* RIGHT PANEL */
-      .summary {
-        background: #fdf9f3;
-        border-radius: 1.5rem;
-        padding: 1.4rem 1.3rem 1.2rem;
-        border: 1px solid rgba(207, 191, 170, 0.9);
-        position: relative;
-        overflow: hidden;
-      }
-
-      .summary-title {
-        font-size: 0.85rem;
-        letter-spacing: 0.13em;
-        text-transform: uppercase;
-        color: #7d6a58;
-        margin-bottom: 0.6rem;
-      }
-
-      .summary-card {
-        border-radius: 1.1rem;
-        padding: 1rem;
-        background: #ffffff;
-        border: 1px solid rgba(204, 187, 165, 0.8);
-        margin-bottom: 0.75rem;
-      }
-
-      .summary-label {
-        font-size: 0.78rem;
-        color: #8a7a6a;
-      }
-
-      .summary-value {
-        font-size: 0.9rem;
-        font-weight: 600;
-        margin-top: 0.15rem;
-      }
-
-      .swatch-bar {
-        display: flex;
-        gap: 0.25rem;
-        margin-top: 0.6rem;
-      }
-
-      .swatch {
-        width: 18px;
-        height: 18px;
-        border-radius: 999px;
-        border: 1px solid #d1bfa7;
-      }
-
-      .swatch.a1 {
-        background: var(--accent-1);
-      }
-      .swatch.a2 {
-        background: var(--accent-2);
-      }
-      .swatch.a3 {
-        background: var(--accent-3);
-      }
-      .swatch.a4 {
-        background: var(--accent-4);
-      }
-      .swatch.a5 {
-        background: var(--accent-5);
-      }
-
-      .summary-note {
-        font-size: 0.78rem;
-        color: var(--text-muted);
-        padding-top: 0.5rem;
-        border-top: 1px dashed rgba(204, 187, 165, 0.9);
-        margin-top: 0.7rem;
-      }
-
-      .tape {
-        position: absolute;
-        top: -10px;
-        right: 26%;
-        width: 80px;
-        height: 22px;
-        background: rgba(183, 211, 198, 0.72);
-        border-radius: 6px;
-        transform: rotate(5deg);
-        box-shadow: 0 6px 12px rgba(155, 182, 166, 0.55);
-      }
-
-      .submitted-banner {
-        margin-bottom: 1rem;
-        padding: 0.6rem 0.8rem;
-        border-radius: 0.9rem;
-        background: #e5f6e9;
-        border: 1px solid #b4dfc0;
-        font-size: 0.83rem;
-        color: #255836;
-      }
-    </style>
-  </head>
-
-  <body>
-    <main class="frame">
-      <!-- LEFT: FORM -->
-      <section>
-        <a href="/" class="back-link">
-          <span>←</span> Back to home
-        </a>
-
-        {% if submitted and name %}
-        <div class="submitted-banner">
-          Thank you, <strong>{{ name }}</strong>! Your mock order details were
-          sent to Kayleigh. She’ll follow up with you to finalize everything.
-        </div>
-        {% endif %}
-
-        <h1>Start your mock order</h1>
-        <p class="subtitle">
-          This isn’t a payment form—just a simple way to get all the details in
-          one place so we can put together the perfect pieces for you.
-        </p>
-
-        <form method="POST">
-          <!-- STEP 1: ABOUT YOU -->
-          <p class="step-label">Step 1 • About you</p>
-
-          <div class="field-group field-row">
-            <div>
-              <label for="name">Name</label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                placeholder="Kayleigh Biggs"
-                required
-              />
-            </div>
-            <div>
-              <label for="email">Email</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="you@example.com"
-                required
-              />
-            </div>
-          </div>
-
-          <!-- WHO IS THIS FOR -->
-          <div class="field-group">
-            <label>Who is this for?</label>
-
-            <div class="chips-row">
-              <label class="chip-option">
-                <input
-                  type="radio"
-                  name="group"
-                  value="Riverview Elementary"
-                />
-                Riverview Elementary
-              </label>
-
-              <label class="chip-option">
-                <input type="radio" name="group" value="Riverview PTA" />
-                Riverview PTA
-              </label>
-
-              <label class="chip-option">
-                <input type="radio" name="group" value="MV Cheerleading" />
-                MV Cheerleading
-              </label>
-
-              <label class="chip-option">
-                <input type="radio" name="group" value="De Soto Cheerleading" />
-                De Soto Cheerleading
-              </label>
-
-              <label class="chip-option">
-                <input type="radio" name="group" value="Small business team" />
-                Small business team
-              </label>
-
-              <label class="chip-option">
-                <input
-                  type="radio"
-                  name="group"
-                  value="Family / Friends group"
-                />
-                Family / Friends group
-              </label>
-
-              <label class="chip-option">
-                <input type="radio" name="group" value="other" />
-                Other
-              </label>
+            <div class="inline-row">
+              <div>
+                <label for="color">Color</label>
+                <input type="text" id="color" placeholder="e.g. Black, Storm, Soft Cream" />
+              </div>
+              <div>
+                <label for="size">Size</label>
+                <input type="text" id="size" placeholder="e.g. YL, S, M, L, XL" />
+              </div>
             </div>
 
-            <input
-              id="group_other"
-              name="group_other"
-              type="text"
-              placeholder="If Other, type the organization name here"
-              style="margin-top: 0.5rem;"
-            />
-
-            <p class="helper">
-              This helps with choosing garments, colors, and overall vibe.
-            </p>
-          </div>
-
-          <!-- STEP 2: GARMENT DETAILS -->
-          <p class="step-label">Step 2 • Garment details</p>
-
-          <div class="field-group field-row">
-            <div>
-              <label for="item_type">Main item type</label>
-              <select id="item_type" name="item_type" required>
-                <option value="">Select one</option>
-                <option value="hoodie">Unisex Hoodie</option>
-                <option value="crewneck">Crewneck Sweatshirt</option>
-                <option value="tshirt">T-Shirt</option>
-                <option value="longsleeve">Long Sleeve Tee</option>
-                <option value="mix">Mix of items</option>
-              </select>
-            </div>
-            <div>
-              <label for="quantity">Approx. total quantity</label>
-              <input
-                id="quantity"
-                name="quantity"
-                type="number"
-                min="1"
-                placeholder="25"
-              />
-            </div>
-          </div>
-
-          <div class="field-group">
-            <label>Color direction</label>
-            <div class="chips-row">
-              <span class="chip-option">Neutrals (sand, grey, black)</span>
-              <span class="chip-option">School colors</span>
-              <span class="chip-option">Pastels</span>
-              <span class="chip-option">Bold + bright</span>
-              <span class="chip-option">Not sure, please guide me</span>
-            </div>
-            <p class="helper">
-              You can be specific later—this just gives a starting direction.
-            </p>
-          </div>
-
-          <div class="field-group">
-            <label>Sizes needed</label>
-            <div class="sizes-row">
-              {% for size in ["YS","YM","YL","YXL","XS","S","M","L","XL","2XL","3XL"] %}
-              <label class="size-pill">
-                <input type="checkbox" name="sizes" value="{{ size }}" />
-                {{ size }}
+            <label>Placement(s)</label>
+            <div class="pill-row" id="placement-pills">
+              {% for p in placements %}
+              <label class="pill">
+                <input type="checkbox" value="{{ p }}">
+                {{ p }}
               </label>
               {% endfor %}
             </div>
-          </div>
 
-          <!-- STEP 3: PICK A DESIGN (DIFF PER GROUP) -->
-          <p class="step-label">Step 3 • Pick a design</p>
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" min="1" value="1" />
 
-          <div
-            class="field-group design-section disabled"
-            id="designSection"
-          >
-            <label>Which design are you thinking?</label>
-            <div class="design-grid">
-              {% for design in designs %}
-              <label
-                class="design-card {% if selected_design_id == design.id %}selected{% endif %}"
-                data-groups="{{ design.groups | join(',') }}"
-              >
-                <div class="design-top-row">
-                  <span class="design-tag">{{ design.tag }}</span>
-                  <span class="design-chip">Choice {{ loop.index }}</span>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    name="design_id"
-                    value="{{ design.id }}"
-                    {% if selected_design_id == design.id %}checked{% endif %}
-                  />
-                  <span class="design-name">{{ design.label }}</span>
-                </div>
-                <p class="design-desc">{{ design.description }}</p>
+            <button type="button" class="btn-main" id="add-item-btn">Add this item to order</button>
+          </section>
+
+          <!-- Section 3: Customer + Shipping + Payment -->
+          <section class="section">
+            <h2>3. Customer & Checkout Details</h2>
+
+            <label for="customer-name">Your name</label>
+            <input type="text" id="customer-name" required />
+
+            <label for="customer-email">Email</label>
+            <input type="email" id="customer-email" required />
+
+            <label for="customer-phone">Phone</label>
+            <input type="tel" id="customer-phone" />
+
+            <label>Shipping or pickup</label>
+            <div class="pill-row">
+              <label class="pill">
+                <input type="radio" name="shipping" value="pickup" checked>
+                Local pickup
               </label>
-              {% endfor %}
+              <label class="pill">
+                <input type="radio" name="shipping" value="shipping">
+                Ship to me (flat rate)
+              </label>
             </div>
-            <p class="helper">
-              First choose who this is for above; then you’ll see design options
-              that fit that group. We’ll fine-tune logo placement and text
-              together.
-            </p>
-          </div>
 
-          <!-- STEP 4: DESIGN NOTES -->
-          <p class="step-label">Step 4 • Design & notes</p>
+            <label>Payment method</label>
+            <div class="pill-row">
+              <label class="pill"><input type="radio" name="payment" value="card" checked> Credit / Debit Card</label>
+              <label class="pill"><input type="radio" name="payment" value="paypal"> PayPal</label>
+              <label class="pill"><input type="radio" name="payment" value="venmo"> Venmo</label>
+              <label class="pill"><input type="radio" name="payment" value="applepay"> Apple Pay</label>
+              <label class="pill"><input type="radio" name="payment" value="cashapp"> Cash App</label>
+              <label class="pill"><input type="radio" name="payment" value="cash"> Cash (contact me)</label>
+            </div>
 
-          <div class="field-group">
-            <label for="design_notes">Design details</label>
-            <textarea
-              id="design_notes"
-              name="design_notes"
-              placeholder="Tell me what you’re thinking—logo placement, front/back print, text, dates, etc."
-            ></textarea>
-            <p class="helper">
-              Later we can add an upload option so you can attach logos or inspo
-              photos directly.
-            </p>
-          </div>
-
-          <div class="submit-row">
-            <button type="submit" class="btn-main">
-              Send mock order details
-            </button>
-            <p class="submit-note">
-              No payment yet—this just sends your info so we can finalize
-              together.
-            </p>
-          </div>
-        </form>
-      </section>
-
-      <!-- RIGHT: SUMMARY / MOODBOARD SIDE -->
-      <aside class="summary">
-        <div class="tape"></div>
-        <p class="summary-title">Order snapshot</p>
-
-        <div class="summary-card">
-          <p class="summary-label">Garment palette</p>
-          <p class="summary-value">Soft neutrals + accent color</p>
-          <div class="swatch-bar">
-            <span class="swatch a1"></span>
-            <span class="swatch a3"></span>
-            <span class="swatch a4"></span>
-            <span class="swatch a2"></span>
-            <span class="swatch a5"></span>
-          </div>
+            <label for="notes">Notes for Kayleigh</label>
+            <input type="text" id="notes" placeholder="Anything I should know about this order?" />
+          </section>
         </div>
 
-        <div class="summary-card">
-          <p class="summary-label">Best for</p>
-          <p class="summary-value">
-            Spirit wear drops, staff gifts, and branded teams that want
-            elevated-but-cozy pieces.
+        <!-- Right column: live preview + order items -->
+        <div>
+          <section class="section">
+            <h2>Live Preview</h2>
+            <p>This is a simple visual summary of what you’re building.</p>
+            <div class="preview-card" id="preview-card">
+              <div class="preview-shirt" id="preview-shirt">
+                Shirt<br>preview
+              </div>
+              <div class="preview-details">
+                <div id="preview-design"><strong>Design:</strong> –</div>
+                <div id="preview-style"><strong>Style:</strong> –</div>
+                <div id="preview-color"><strong>Color:</strong> –</div>
+                <div id="preview-placements"><strong>Placement:</strong> –</div>
+                <div id="preview-qty"><strong>Qty:</strong> 1</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2>Items in This Order</h2>
+            <p>Add multiple different pieces (different colors, sizes, placements) before you submit.</p>
+            <div class="order-items" id="order-items">
+              <div style="font-size:0.8rem; opacity:0.7;">No items yet – add your first item above.</div>
+            </div>
+          </section>
+
+          <button type="submit" class="btn-main">Submit Order Summary to Kayleigh</button>
+          <p style="font-size:0.75rem; margin-top:0.4rem; opacity:0.75;">
+            (You won’t be charged automatically yet. I’ll review your order, confirm details & send a payment link.)
           </p>
         </div>
+      </div>
+    </form>
+  </main>
 
-        {% if selected_design %}
-        <div class="summary-card">
-          <p class="summary-label">Selected design</p>
-          <p class="summary-value">{{ selected_design.label }}</p>
-        </div>
-        {% endif %}
+  <div class="sticky-cart" id="sticky-cart">
+    <div><span id="cart-count">0</span> items in order</div>
+    <button type="button" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">Review & Submit</button>
+  </div>
 
-        <p class="summary-note">
-          Once this form is submitted, Kayleigh will review your details, double
-          check quantities and sizing, and follow up with design options and
-          pricing. Think of this as the fun “initial design consult” on paper.
-        </p>
-      </aside>
-    </main>
+  <script>
+    const placementsContainer = document.getElementById("placement-pills");
+    const placementsInputs = placementsContainer.querySelectorAll("input[type=checkbox]");
+    const addItemBtn = document.getElementById("add-item-btn");
+    const orderItemsEl = document.getElementById("order-items");
+    const cartCountEl = document.getElementById("cart-count");
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const groupRadios = document.querySelectorAll('input[name="group"]');
-        const designSection = document.getElementById("designSection");
-        const designCards = document.querySelectorAll(".design-card");
+    const preview = {
+      design: document.getElementById("preview-design"),
+      style: document.getElementById("preview-style"),
+      color: document.getElementById("preview-color"),
+      placements: document.getElementById("preview-placements"),
+      qty: document.getElementById("preview-qty"),
+    };
 
-        function updateDesignSection() {
-          if (!designSection) return;
-          const checked = Array.from(groupRadios).find((r) => r.checked);
-          if (!checked) {
-            designSection.classList.add("disabled");
-            designCards.forEach((card) => card.classList.add("hidden"));
-            return;
-          }
+    function getCurrentSelections() {
+      const designName = document.getElementById("design-name").value || "Custom / Existing Design";
+      const style = document.getElementById("style").selectedOptions[0].textContent;
+      const color = document.getElementById("color").value || "TBD";
+      const size = document.getElementById("size").value || "TBD";
+      const qty = document.getElementById("quantity").value || "1";
 
-          const selectedGroup = checked.value;
-          designSection.classList.remove("disabled");
+      const placements = Array.from(placementsInputs)
+        .filter(i => i.checked)
+        .map(i => i.value);
 
-          designCards.forEach((card) => {
-            const groupsStr = card.getAttribute("data-groups") || "";
-            const groups = groupsStr.split(",").map((g) => g.trim());
-            if (groups.includes(selectedGroup)) {
-              card.classList.remove("hidden");
-            } else {
-              card.classList.add("hidden");
-            }
-          });
-        }
+      return { designName, style, color, size, qty, placements };
+    }
 
-        groupRadios.forEach((radio) => {
-          radio.addEventListener("change", updateDesignSection);
-        });
+    function updatePreview() {
+      const s = getCurrentSelections();
+      preview.design.innerHTML = "<strong>Design:</strong> " + s.designName;
+      preview.style.innerHTML = "<strong>Style:</strong> " + s.style;
+      preview.color.innerHTML = "<strong>Color:</strong> " + s.color + " • Size " + s.size;
+      preview.placements.innerHTML = "<strong>Placement:</strong> " + (s.placements.length ? s.placements.join(", ") : "TBD");
+      preview.qty.innerHTML = "<strong>Qty:</strong> " + s.qty;
+    }
 
-        // On page load (e.g. after submit), respect existing selection
-        updateDesignSection();
+    document.getElementById("style").addEventListener("change", updatePreview);
+    document.getElementById("color").addEventListener("input", updatePreview);
+    document.getElementById("size").addEventListener("input", updatePreview);
+    document.getElementById("quantity").addEventListener("input", updatePreview);
+    document.getElementById("design-name").addEventListener("input", updatePreview);
+    placementsInputs.forEach(p => {
+      p.addEventListener("change", (e) => {
+        e.target.closest(".pill").classList.toggle("active", e.target.checked);
+        updatePreview();
       });
-    </script>
-  </body>
+    });
+
+    addItemBtn.addEventListener("click", () => {
+      const s = getCurrentSelections();
+      const itemDiv = document.createElement("div");
+      itemDiv.className = "order-item-card";
+      itemDiv.innerHTML = `
+        <strong>${s.style}</strong> • ${s.color} • Size ${s.size}<br>
+        Design: ${s.designName}<br>
+        Placement: ${s.placements.length ? s.placements.join(", ") : "TBD"}<br>
+        Qty: ${s.qty}
+      `;
+      if (orderItemsEl.children.length && orderItemsEl.firstElementChild.tagName === "DIV" && orderItemsEl.firstElementChild.style.opacity) {
+        orderItemsEl.innerHTML = "";
+      }
+      orderItemsEl.appendChild(itemDiv);
+
+      cartCountEl.textContent = orderItemsEl.children.length;
+    });
+
+    // Initialize preview
+    updatePreview();
+  </script>
+</body>
 </html>
